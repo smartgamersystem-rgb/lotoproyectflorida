@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Florida Lotto Pool Project</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <style>
 body{
 margin:0;
@@ -17,9 +19,9 @@ color:white;
 display:flex;
 justify-content:center;
 gap:10px;
+flex-wrap:wrap;
 padding:12px;
 background:#00000060;
-flex-wrap:wrap;
 }
 
 .topbar button{
@@ -31,6 +33,7 @@ font-weight:bold;
 }
 
 .zelle{background:#22c55e;color:white;}
+.gfm{background:#0284c7;color:white;}
 .lang{background:#444;color:white;}
 
 header{
@@ -43,8 +46,8 @@ h1{color:#4ade80;}
 .hero{
 width:100%;
 max-width:520px;
-display:block;
 margin:10px auto;
+display:block;
 border-radius:12px;
 box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
@@ -66,12 +69,18 @@ border-radius:12px;
 backdrop-filter:blur(10px);
 }
 
-input{
+input, textarea{
 width:100%;
 padding:10px;
 margin-top:8px;
 border-radius:8px;
 border:none;
+box-sizing:border-box;
+}
+
+textarea{
+min-height:110px;
+resize:vertical;
 }
 
 button.submit{
@@ -83,6 +92,10 @@ border:none;
 border-radius:8px;
 font-weight:bold;
 cursor:pointer;
+}
+
+button.submit:hover{
+background:#16a34a;
 }
 
 table{
@@ -100,14 +113,20 @@ opacity:0.9;
 line-height:1.6;
 font-size:14px;
 }
+
+.status{
+margin-top:10px;
+font-weight:bold;
+color:#4ade80;
+}
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-<button class="zelle" onclick="scrollToForm()">Participate via Zelle</button>
+<button class="zelle" onclick="scrollToForm()">Zelle</button>
+<button class="gfm" onclick="openGFM()">GoFundMe</button>
 <button class="lang" onclick="toggleLang()">EN / ES</button>
 </div>
 
@@ -127,7 +146,6 @@ Working together is better than working alone
 
 <div class="container">
 
-<!-- WHAT IS POOL -->
 <div class="card">
 <h2 id="whatTitle">What is a lottery pool?</h2>
 <p id="whatText" class="info">
@@ -135,85 +153,87 @@ A lottery pool is a group participation system where multiple people contribute 
 </p>
 </div>
 
-<!-- STRUCTURE -->
 <div class="card">
 <h2 id="structureTitle">Pool Structure</h2>
 
-<p class="info">
-✔ 52 draws (Florida Lottery)<br>
-✔ 10 fixed numbers<br>
-✔ $2 per number per draw<br><br>
+<p id="structureText" class="info">
+✔ 52 Florida Lottery draws<br>
+✔ 10 fixed numbers used across all draws<br>
+✔ Each number costs $2 per draw<br><br>
 
-💰 Total calculation:<br>
+💰 Calculation:<br>
 10 × $2 = $20 per draw<br>
 $20 × 52 draws = <b>$1,040 total pool</b>
 </p>
 </div>
 
-<!-- TRANSPARENCY -->
 <div class="card">
-<h2 id="noteTitle">Transparency & Information</h2>
+<h2 id="noteTitle">Transparency & Important Information</h2>
 
 <p id="noteText" class="info">
-
-This is NOT a ticket sale or investment product.<br><br>
+This is NOT a lottery ticket sale, investment, or financial guarantee.<br><br>
 
 It is a collaborative lottery pool where participants voluntarily contribute funds.<br><br>
 
-📌 Participation rules:<br>
-• Open to anyone from any state or country<br>
-• Funds are used only for official Florida Lottery tickets<br>
-• Purchase is made only when $1,040 is fully collected<br><br>
+📌 Participation Rules:<br>
+• Open from any state or country<br>
+• Tickets are purchased only when $1,040 is fully collected<br>
+• Purchase happens on the exact funding completion date<br><br>
 
-📅 Execution process:<br>
-• 10-number strategy is used<br>
+📅 Execution Plan:<br>
+• 10-number system is used<br>
 • 52 draw cycle (~17–18 weeks)<br>
-• Tickets are purchased in Florida on funding completion date<br><br>
+• Tickets are officially purchased in Florida<br><br>
 
-🔍 Transparency:<br>
-• Tickets are photographed/scanned<br>
-• QR codes and barcodes allow verification on official Florida Lottery site<br><br>
+🔍 Transparency & Verification:<br>
+• Physical tickets are documented by photo or scan<br>
+• QR codes and barcodes allow public verification<br>
+• Results can be checked on official Florida Lottery systems<br><br>
 
-⚠️ Disclaimer:<br>
-There is no guarantee of winnings or returns. Participation is based on chance.
+📊 Data & Analysis Method:<br>
+A suite of statistical analysis tools is used to study historical lottery patterns and number selection strategies.<br><br>
+
+These tools are used only for informational and structural analysis.<br>
+No model can predict or guarantee lottery outcomes.<br><br>
+
+⚠️ Risk Disclaimer:<br>
+All lottery participation is based on chance. There are no guarantees of winnings or returns.
 </p>
 </div>
 
-<!-- DURATION -->
 <div class="card">
 <h2 id="durationTitle">Duration</h2>
 
-<p class="info">
-The cycle runs for 52 draws (~17–18 weeks) after ticket purchase is completed.
+<p id="durationText" class="info">
+The full cycle consists of 52 draws (~17–18 weeks).<br><br>
+The cycle begins only after full funding is completed and tickets are purchased.
 </p>
 </div>
 
-<!-- PROGRESS -->
 <div class="card">
 <h2>Pool Progress</h2>
-
 <p id="amount">$0 / $1040</p>
 </div>
 
-<!-- FORM -->
 <div class="card" id="formBox">
-<h2 id="joinTitle">Join the Pool</h2>
+<h2 id="joinTitle">Join the Pool / Contact Form</h2>
 
-<form id="form">
-<input id="name" placeholder="Full Name" required>
-<input id="phone" placeholder="Phone Number" required>
-<input id="money" type="number" placeholder="Minimum $10" required>
-<input id="ref" placeholder="Zelle Reference ID" required>
+<form id="contactForm">
+<input id="contact_name" name="name" placeholder="Full Name" required>
+<input id="contact_email" name="email" type="email" placeholder="Email Address" required>
+<input id="contact_phone" name="phone" placeholder="Phone Number" required>
+<input id="contact_amount" name="amount" type="number" placeholder="Minimum $10" required>
+<input id="contact_ref" name="reference" placeholder="Zelle Reference ID">
+<textarea id="contact_message" name="message" placeholder="Write your message here..." required></textarea>
 
-<button class="submit">Submit</button>
+<button class="submit" type="submit">Submit / Send Message</button>
 </form>
 
-<p class="info" style="margin-top:10px;">
-💸 Only Zelle payments are accepted for participation.
-</p>
+<p id="contactStatus" class="status"></p>
+
+<button class="submit" onclick="openGFM()">Donate via GoFundMe</button>
 </div>
 
-<!-- PARTICIPANTS -->
 <div class="card">
 <h2>Participants</h2>
 
@@ -225,6 +245,11 @@ The cycle runs for 52 draws (~17–18 weeks) after ticket purchase is completed.
 </div>
 
 <script>
+const EMAILJS_PUBLIC_KEY = "ajKsTx923eunwOaSt";
+const EMAILJS_SERVICE_ID = "service_nwx30fx";
+const EMAILJS_TEMPLATE_ID = "template_xxxxx";
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
 let goal = 1040;
 let data = JSON.parse(localStorage.getItem("pool")) || [];
@@ -232,71 +257,114 @@ let data = JSON.parse(localStorage.getItem("pool")) || [];
 data.forEach(addRow);
 update();
 
-form.addEventListener("submit",e=>{
+document.getElementById("contactForm").addEventListener("submit", function(e){
 e.preventDefault();
 
-let entry={
-name:name.value,
-money:parseInt(money.value)
-};
+let moneyValue = parseInt(document.getElementById("contact_amount").value);
 
-if(entry.money < 10){
-alert("Minimum $10");
+if(moneyValue < 10){
+alert("Minimum $10 required");
 return;
 }
 
+contactStatus.innerText = "Sending message...";
+
+emailjs.sendForm(
+EMAILJS_SERVICE_ID,
+EMAILJS_TEMPLATE_ID,
+this
+).then(() => {
+
+let entry = {
+name: document.getElementById("contact_name").value,
+money: moneyValue
+};
+
 data.push(entry);
-localStorage.setItem("pool",JSON.stringify(data));
+localStorage.setItem("pool", JSON.stringify(data));
 
 addRow(entry);
 update();
+
+contactStatus.innerText = "Message sent successfully!";
+this.reset();
+
+}).catch((error) => {
+contactStatus.innerText = "Error sending message. Check your EmailJS Template ID.";
+console.log(error);
+});
 });
 
 function addRow(d){
-let r=table.insertRow();
-r.insertCell(0).innerText=d.name;
-r.insertCell(1).innerText="$"+d.money;
+let r = table.insertRow();
+r.insertCell(0).innerText = d.name;
+r.insertCell(1).innerText = "$" + d.money;
 }
 
 function update(){
-let total=data.reduce((a,b)=>a+b.money,0);
-if(total>goal) total=goal;
-amount.innerText="$"+total+" / $1040";
+let total = data.reduce((a,b) => a + b.money, 0);
+if(total > goal) total = goal;
+amount.innerText = "$" + total + " / $1040";
 }
 
 function scrollToForm(){
 formBox.scrollIntoView({behavior:"smooth"});
 }
 
-/* TRANSLATION */
-let lang="en";
+function openGFM(){
+window.open("https://www.gofundme.com/f/join-our-journey-of-shared-opportunity-and-hope","_blank");
+}
+
+let lang = "en";
 
 function toggleLang(){
 
-if(lang==="en"){
-title.innerText="Proyecto Pool Lotería Florida";
-team.innerText="Trabajar en equipo es mejor que trabajar solo";
-whatTitle.innerText="¿Qué es una pool de lotería?";
-whatText.innerText="Un grupo de personas contribuye dinero para jugar la lotería juntos.";
+if(lang === "en"){
+title.innerText = "Proyecto Pool Lotería Florida";
+team.innerText = "Trabajar en equipo es mejor que trabajar solo";
 
-structureTitle.innerText="Estructura del Proyecto";
+whatTitle.innerText = "¿Qué es una pool de lotería?";
+whatText.innerText = "Un sistema donde varias personas participan juntas en la lotería.";
 
-noteTitle.innerText="Transparencia e Información";
+structureTitle.innerText = "Estructura del Proyecto";
+structureText.innerHTML = `
+✔ 52 sorteos<br>
+✔ 10 números fijos<br>
+✔ $2 por número<br><br>
+💰 Total: $1,040
+`;
 
-durationTitle.innerText="Duración";
+noteTitle.innerText = "Transparencia e Información";
+noteText.innerHTML = `
+Esto no es venta de tickets ni inversión.<br><br>
 
-joinTitle.innerText="Participar";
+✔ Compra solo cuando se completa $1,040<br>
+✔ 52 sorteos aproximadamente 17 a 18 semanas<br>
+✔ Tickets oficiales en Florida<br><br>
 
-amount.innerText="$ / $1040";
+📊 Análisis de datos estadístico aplicado<br>
+⚠️ Sin garantía de ganancias
+`;
 
-lang="es";
+durationTitle.innerText = "Duración";
+durationText.innerText = "52 sorteos aproximadamente 17 a 18 semanas después de la compra";
+
+joinTitle.innerText = "Participar / Formulario de Contacto";
+
+document.getElementById("contact_name").placeholder = "Nombre completo";
+document.getElementById("contact_email").placeholder = "Correo electrónico";
+document.getElementById("contact_phone").placeholder = "Número de teléfono";
+document.getElementById("contact_amount").placeholder = "Mínimo $10";
+document.getElementById("contact_ref").placeholder = "Referencia de Zelle";
+document.getElementById("contact_message").placeholder = "Escribe tu mensaje aquí...";
+
+lang = "es";
 }
 else{
 location.reload();
 }
 
 }
-
 </script>
 
 </body>
