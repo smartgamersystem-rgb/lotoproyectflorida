@@ -17,9 +17,9 @@ color:white;
 display:flex;
 justify-content:center;
 gap:10px;
-flex-wrap:wrap;
 padding:12px;
 background:#00000060;
+flex-wrap:wrap;
 }
 
 .topbar button{
@@ -31,7 +31,6 @@ font-weight:bold;
 }
 
 .zelle{background:#22c55e;color:white;}
-.gfm{background:#0284c7;color:white;}
 .lang{background:#444;color:white;}
 
 header{
@@ -44,8 +43,8 @@ h1{color:#4ade80;}
 .hero{
 width:100%;
 max-width:520px;
-margin:10px auto;
 display:block;
+margin:10px auto;
 border-radius:12px;
 box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
@@ -108,8 +107,7 @@ font-size:14px;
 
 <!-- TOP BAR -->
 <div class="topbar">
-<button class="zelle" onclick="scrollToForm()">Zelle</button>
-<button class="gfm" onclick="openGFM()">GoFundMe</button>
+<button class="zelle" onclick="scrollToForm()">Participate via Zelle</button>
 <button class="lang" onclick="toggleLang()">EN / ES</button>
 </div>
 
@@ -141,12 +139,12 @@ A lottery pool is a group participation system where multiple people contribute 
 <div class="card">
 <h2 id="structureTitle">Pool Structure</h2>
 
-<p id="structureText" class="info">
-✔ 52 Florida Lottery draws<br>
-✔ 10 fixed numbers used across all draws<br>
-✔ Each number costs $2 per draw<br><br>
+<p class="info">
+✔ 52 draws (Florida Lottery)<br>
+✔ 10 fixed numbers<br>
+✔ $2 per number per draw<br><br>
 
-💰 Calculation:<br>
+💰 Total calculation:<br>
 10 × $2 = $20 per draw<br>
 $20 × 52 draws = <b>$1,040 total pool</b>
 </p>
@@ -154,37 +152,30 @@ $20 × 52 draws = <b>$1,040 total pool</b>
 
 <!-- TRANSPARENCY -->
 <div class="card">
-<h2 id="noteTitle">Transparency & Important Information</h2>
+<h2 id="noteTitle">Transparency & Information</h2>
 
 <p id="noteText" class="info">
 
-This is NOT a lottery ticket sale, investment, or financial guarantee.<br><br>
+This is NOT a ticket sale or investment product.<br><br>
 
 It is a collaborative lottery pool where participants voluntarily contribute funds.<br><br>
 
-📌 Participation Rules:<br>
-• Open from any state or country<br>
-• Tickets are purchased only when $1,040 is fully collected<br>
-• Purchase happens on the exact funding completion date<br><br>
+📌 Participation rules:<br>
+• Open to anyone from any state or country<br>
+• Funds are used only for official Florida Lottery tickets<br>
+• Purchase is made only when $1,040 is fully collected<br><br>
 
-📅 Execution Plan:<br>
-• 10-number system is used<br>
+📅 Execution process:<br>
+• 10-number strategy is used<br>
 • 52 draw cycle (~17–18 weeks)<br>
-• Tickets are officially purchased in Florida<br><br>
+• Tickets are purchased in Florida on funding completion date<br><br>
 
-🔍 Transparency & Verification:<br>
-• Physical tickets are documented (photo/scanned)<br>
-• QR codes and barcodes allow public verification<br>
-• Results can be checked on official Florida Lottery systems<br><br>
+🔍 Transparency:<br>
+• Tickets are photographed/scanned<br>
+• QR codes and barcodes allow verification on official Florida Lottery site<br><br>
 
-📊 Data & Analysis Method:<br>
-A suite of statistical analysis tools is used to study historical lottery patterns and number selection strategies.<br><br>
-
-These tools are used only for informational and structural analysis.<br>
-No model can predict or guarantee lottery outcomes.<br><br>
-
-⚠️ Risk Disclaimer:<br>
-All lottery participation is based on chance. There are no guarantees of winnings or returns.
+⚠️ Disclaimer:<br>
+There is no guarantee of winnings or returns. Participation is based on chance.
 </p>
 </div>
 
@@ -192,9 +183,8 @@ All lottery participation is based on chance. There are no guarantees of winning
 <div class="card">
 <h2 id="durationTitle">Duration</h2>
 
-<p id="durationText" class="info">
-The full cycle consists of 52 draws (~17–18 weeks).<br><br>
-The cycle begins only after full funding is completed and tickets are purchased.
+<p class="info">
+The cycle runs for 52 draws (~17–18 weeks) after ticket purchase is completed.
 </p>
 </div>
 
@@ -218,7 +208,9 @@ The cycle begins only after full funding is completed and tickets are purchased.
 <button class="submit">Submit</button>
 </form>
 
-<button class="submit" onclick="openGFM()">Donate via GoFundMe</button>
+<p class="info" style="margin-top:10px;">
+💸 Only Zelle payments are accepted for participation.
+</p>
 </div>
 
 <!-- PARTICIPANTS -->
@@ -249,7 +241,7 @@ money:parseInt(money.value)
 };
 
 if(entry.money < 10){
-alert("Minimum $10 required");
+alert("Minimum $10");
 return;
 }
 
@@ -276,10 +268,6 @@ function scrollToForm(){
 formBox.scrollIntoView({behavior:"smooth"});
 }
 
-function openGFM(){
-window.open("https://www.gofundme.com/f/join-our-journey-of-shared-opportunity-and-hope","_blank");
-}
-
 /* TRANSLATION */
 let lang="en";
 
@@ -289,32 +277,16 @@ if(lang==="en"){
 title.innerText="Proyecto Pool Lotería Florida";
 team.innerText="Trabajar en equipo es mejor que trabajar solo";
 whatTitle.innerText="¿Qué es una pool de lotería?";
-whatText.innerText="Un sistema donde varias personas participan juntas en la lotería.";
+whatText.innerText="Un grupo de personas contribuye dinero para jugar la lotería juntos.";
 
 structureTitle.innerText="Estructura del Proyecto";
-structureText.innerHTML=`
-✔ 52 sorteos<br>
-✔ 10 números fijos<br>
-✔ $2 por número<br><br>
-💰 Total: $1,040
-`;
 
 noteTitle.innerText="Transparencia e Información";
-noteText.innerHTML=`
-Esto no es venta de tickets ni inversión.<br><br>
-
-✔ Compra solo cuando se completa $1,040<br>
-✔ 52 sorteos (~18 semanas)<br>
-✔ Tickets oficiales en Florida<br><br>
-
-📊 Análisis de datos estadístico aplicado<br>
-⚠️ Sin garantía de ganancias
-`;
 
 durationTitle.innerText="Duración";
-durationText.innerText="52 sorteos (~17–18 semanas) después de la compra";
 
 joinTitle.innerText="Participar";
+
 amount.innerText="$ / $1040";
 
 lang="es";
