@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida Lotto Pool Project</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f172a,#022c22);
+color:white;
+}
+
+.topbar{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+padding:12px;
+background:#00000060;
+}
+
+.topbar button{
+padding:10px 14px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.zelle{background:#22c55e;color:white;}
+.gfm{background:#0284c7;color:white;}
+.lang{background:#444;color:white;}
+
+header{
+text-align:center;
+padding:25px;
+}
+
+h1{color:#4ade80;}
+
+.hero{
+width:100%;
+max-width:520px;
+margin:10px auto;
+display:block;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+.subtitle{opacity:0.8;}
+.team{color:#22c55e;font-weight:bold;margin-top:8px;}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+margin-top:20px;
+border-radius:12px;
+backdrop-filter:blur(10px);
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border-radius:8px;
+border:none;
+}
+
+button.submit{
+width:100%;
+margin-top:10px;
+padding:12px;
+background:#22c55e;
+border:none;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:10px;
+}
+
+td,th{
+padding:6px;
+border-bottom:1px solid #ffffff20;
+}
+
+.info{
+opacity:0.9;
+line-height:1.6;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+<button class="zelle" onclick="scrollToForm()">Zelle</button>
+<button class="gfm" onclick="openGFM()">GoFundMe</button>
+<button class="lang" onclick="toggleLang()">EN / ES</button>
+</div>
+
+<header>
+<h1 id="title">Florida Lotto Pool Project</h1>
+
+<img src="pool.jpg" class="hero">
+
+<div class="subtitle">
+52 Draws · 10 Numbers · $2 per number · Total Cycle: $1,040
+</div>
+
+<div class="team" id="team">
+Working together is better than working alone
+</div>
+</header>
+
+<div class="container">
+
+<!-- WHAT IS POOL -->
+<div class="card">
+<h2 id="whatTitle">What is a lottery pool?</h2>
+<p id="whatText" class="info">
+A lottery pool is a group participation system where multiple people contribute funds to play the lottery together as a team.
+</p>
+</div>
+
+<!-- STRUCTURE -->
+<div class="card">
+<h2 id="structureTitle">Pool Structure</h2>
+
+<p id="structureText" class="info">
+✔ 52 Florida Lottery draws<br>
+✔ 10 fixed numbers used across all draws<br>
+✔ Each number costs $2 per draw<br><br>
+
+💰 Calculation:<br>
+10 × $2 = $20 per draw<br>
+$20 × 52 draws = <b>$1,040 total pool</b>
+</p>
+</div>
+
+<!-- TRANSPARENCY -->
+<div class="card">
+<h2 id="noteTitle">Transparency & Important Information</h2>
+
+<p id="noteText" class="info">
+
+This is NOT a lottery ticket sale, investment, or financial guarantee.<br><br>
+
+It is a collaborative lottery pool where participants voluntarily contribute funds.<br><br>
+
+📌 Participation Rules:<br>
+• Open from any state or country<br>
+• Tickets are purchased only when $1,040 is fully collected<br>
+• Purchase happens on the exact funding completion date<br><br>
+
+📅 Execution Plan:<br>
+• 10-number system is used<br>
+• 52 draw cycle (~17–18 weeks)<br>
+• Tickets are officially purchased in Florida<br><br>
+
+🔍 Transparency & Verification:<br>
+• Physical tickets are documented (photo/scanned)<br>
+• QR codes and barcodes allow public verification<br>
+• Results can be checked on official Florida Lottery systems<br><br>
+
+📊 Data & Analysis Method:<br>
+A suite of statistical analysis tools is used to study historical lottery patterns and number selection strategies.<br><br>
+
+These tools are used only for informational and structural analysis.<br>
+No model can predict or guarantee lottery outcomes.<br><br>
+
+⚠️ Risk Disclaimer:<br>
+All lottery participation is based on chance. There are no guarantees of winnings or returns.
+</p>
+</div>
+
+<!-- DURATION -->
+<div class="card">
+<h2 id="durationTitle">Duration</h2>
+
+<p id="durationText" class="info">
+The full cycle consists of 52 draws (~17–18 weeks).<br><br>
+The cycle begins only after full funding is completed and tickets are purchased.
+</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="card">
+<h2>Pool Progress</h2>
+
+<p id="amount">$0 / $1040</p>
+</div>
+
+<!-- FORM -->
+<div class="card" id="formBox">
+<h2 id="joinTitle">Join the Pool</h2>
+
+<form id="form">
+<input id="name" placeholder="Full Name" required>
+<input id="phone" placeholder="Phone Number" required>
+<input id="money" type="number" placeholder="Minimum $10" required>
+<input id="ref" placeholder="Zelle Reference ID" required>
+
+<button class="submit">Submit</button>
+</form>
+
+<button class="submit" onclick="openGFM()">Donate via GoFundMe</button>
+</div>
+
+<!-- PARTICIPANTS -->
+<div class="card">
+<h2>Participants</h2>
+
+<table id="table">
+<tr><th>Name</th><th>Amount</th></tr>
+</table>
+</div>
+
+</div>
+
+<script>
+
+let goal = 1040;
+let data = JSON.parse(localStorage.getItem("pool")) || [];
+
+data.forEach(addRow);
+update();
+
+form.addEventListener("submit",e=>{
+e.preventDefault();
+
+let entry={
+name:name.value,
+money:parseInt(money.value)
+};
+
+if(entry.money < 10){
+alert("Minimum $10 required");
+return;
+}
+
+data.push(entry);
+localStorage.setItem("pool",JSON.stringify(data));
+
+addRow(entry);
+update();
+});
+
+function addRow(d){
+let r=table.insertRow();
+r.insertCell(0).innerText=d.name;
+r.insertCell(1).innerText="$"+d.money;
+}
+
+function update(){
+let total=data.reduce((a,b)=>a+b.money,0);
+if(total>goal) total=goal;
+amount.innerText="$"+total+" / $1040";
+}
+
+function scrollToForm(){
+formBox.scrollIntoView({behavior:"smooth"});
+}
+
+function openGFM(){
+window.open("https://www.gofundme.com/f/join-our-journey-of-shared-opportunity-and-hope","_blank");
+}
+
+/* TRANSLATION */
+let lang="en";
+
+function toggleLang(){
+
+if(lang==="en"){
+title.innerText="Proyecto Pool Lotería Florida";
+team.innerText="Trabajar en equipo es mejor que trabajar solo";
+whatTitle.innerText="¿Qué es una pool de lotería?";
+whatText.innerText="Un sistema donde varias personas participan juntas en la lotería.";
+
+structureTitle.innerText="Estructura del Proyecto";
+structureText.innerHTML=`
+✔ 52 sorteos<br>
+✔ 10 números fijos<br>
+✔ $2 por número<br><br>
+💰 Total: $1,040
+`;
+
+noteTitle.innerText="Transparencia e Información";
+noteText.innerHTML=`
+Esto no es venta de tickets ni inversión.<br><br>
+
+✔ Compra solo cuando se completa $1,040<br>
+✔ 52 sorteos (~18 semanas)<br>
+✔ Tickets oficiales en Florida<br><br>
+
+📊 Análisis de datos estadístico aplicado<br>
+⚠️ Sin garantía de ganancias
+`;
+
+durationTitle.innerText="Duración";
+durationText.innerText="52 sorteos (~17–18 semanas) después de la compra";
+
+joinTitle.innerText="Participar";
+amount.innerText="$ / $1040";
+
+lang="es";
+}
+else{
+location.reload();
+}
+
+}
+
+</script>
+
+</body>
+</html>
