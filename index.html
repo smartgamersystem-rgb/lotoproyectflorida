@@ -11,8 +11,8 @@
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#0f172a,#022c22);
-color:white;
+background:linear-gradient(135deg,#ffffff,#d1d5db,#111827);
+color:#111827;
 }
 
 .topbar{
@@ -20,40 +20,55 @@ display:flex;
 justify-content:center;
 gap:10px;
 flex-wrap:wrap;
-padding:12px;
-background:#00000060;
+padding:14px;
+background:#111827;
+box-shadow:0 4px 20px rgba(0,0,0,0.25);
 }
 
 .topbar button{
-padding:10px 14px;
+padding:11px 16px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 }
 
-.zelle{background:#22c55e;color:white;}
-.gfm{background:#0284c7;color:white;}
-.lang{background:#444;color:white;}
+.zelle{background:#ffffff;color:#111827;}
+.gfm{background:#6b7280;color:white;}
+.lang{background:#000;color:white;}
 
 header{
 text-align:center;
-padding:25px;
+padding:30px 20px;
+background:linear-gradient(180deg,#f9fafb,#e5e7eb);
 }
 
-h1{color:#4ade80;}
+h1{
+color:#111827;
+font-size:34px;
+}
 
 .hero{
 width:100%;
 max-width:520px;
 margin:10px auto;
 display:block;
-border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
+border-radius:16px;
+box-shadow:0 12px 30px rgba(0,0,0,0.35);
+border:4px solid white;
 }
 
-.subtitle{opacity:0.8;}
-.team{color:#22c55e;font-weight:bold;margin-top:8px;}
+.subtitle{
+color:#374151;
+font-weight:600;
+}
+
+.team{
+color:#111827;
+font-weight:bold;
+margin-top:10px;
+font-size:18px;
+}
 
 .container{
 max-width:1000px;
@@ -62,62 +77,75 @@ padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.05);
-padding:20px;
+background:rgba(255,255,255,0.88);
+padding:22px;
 margin-top:20px;
-border-radius:12px;
-backdrop-filter:blur(10px);
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.18);
+border:1px solid #d1d5db;
+}
+
+.card h2{
+color:#111827;
 }
 
 input, textarea{
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:8px;
-border-radius:8px;
-border:none;
+border-radius:10px;
+border:1px solid #9ca3af;
 box-sizing:border-box;
+background:#f9fafb;
+color:#111827;
+font-size:15px;
 }
 
 textarea{
-min-height:110px;
+min-height:120px;
 resize:vertical;
 }
 
 button.submit{
 width:100%;
-margin-top:10px;
-padding:12px;
-background:#22c55e;
+margin-top:12px;
+padding:13px;
+background:#111827;
+color:white;
 border:none;
-border-radius:8px;
+border-radius:10px;
 font-weight:bold;
 cursor:pointer;
 }
 
 button.submit:hover{
-background:#16a34a;
+background:#374151;
 }
 
 table{
 width:100%;
 margin-top:10px;
+border-collapse:collapse;
 }
 
 td,th{
-padding:6px;
-border-bottom:1px solid #ffffff20;
+padding:8px;
+border-bottom:1px solid #d1d5db;
+text-align:left;
 }
 
 .info{
-opacity:0.9;
+opacity:0.95;
 line-height:1.6;
 font-size:14px;
+color:#1f2937;
 }
 
 .status{
 margin-top:10px;
+color:#111827;
 font-weight:bold;
-color:#4ade80;
+word-break:break-word;
 }
 </style>
 </head>
@@ -219,12 +247,16 @@ The cycle begins only after full funding is completed and tickets are purchased.
 <h2 id="joinTitle">Join the Pool / Contact Form</h2>
 
 <form id="contactForm">
-<input id="contact_name" name="name" placeholder="Full Name" required>
-<input id="contact_email" name="email" type="email" placeholder="Email Address" required>
-<input id="contact_phone" name="phone" placeholder="Phone Number" required>
-<input id="contact_amount" name="amount" type="number" placeholder="Minimum $10" required>
-<input id="contact_ref" name="reference" placeholder="Zelle Reference ID">
-<textarea id="contact_message" name="message" placeholder="Write your message here..." required></textarea>
+<input id="name" name="name" placeholder="Full Name" required>
+<input id="email" name="email" type="email" placeholder="Email Address" required>
+<input id="phone" name="phone" placeholder="Phone Number" required>
+<input id="money" name="amount" type="number" placeholder="Minimum $10" required>
+<input id="ref" name="reference" placeholder="Zelle Reference ID">
+
+<textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+
+<input type="hidden" name="title" value="Florida Lotto Pool Contact">
+<input type="hidden" name="time" id="time">
 
 <button class="submit" type="submit">Submit / Send Message</button>
 </form>
@@ -247,7 +279,7 @@ The cycle begins only after full funding is completed and tickets are purchased.
 <script>
 const EMAILJS_PUBLIC_KEY = "ajKsTx923eunwOaSt";
 const EMAILJS_SERVICE_ID = "service_nwx30fx";
-const EMAILJS_TEMPLATE_ID = "template_xxxxx";
+const EMAILJS_TEMPLATE_ID = "template_tbcnliy";
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
@@ -260,12 +292,16 @@ update();
 document.getElementById("contactForm").addEventListener("submit", function(e){
 e.preventDefault();
 
-let moneyValue = parseInt(document.getElementById("contact_amount").value);
+let nameValue = document.getElementById("name").value;
+let moneyValue = parseInt(document.getElementById("money").value);
+let contactStatus = document.getElementById("contactStatus");
 
 if(moneyValue < 10){
 alert("Minimum $10 required");
 return;
 }
+
+document.getElementById("time").value = new Date().toLocaleString();
 
 contactStatus.innerText = "Sending message...";
 
@@ -276,7 +312,7 @@ this
 ).then(() => {
 
 let entry = {
-name: document.getElementById("contact_name").value,
+name: nameValue,
 money: moneyValue
 };
 
@@ -290,13 +326,13 @@ contactStatus.innerText = "Message sent successfully!";
 this.reset();
 
 }).catch((error) => {
-contactStatus.innerText = "Error sending message. Check your EmailJS Template ID.";
-console.log(error);
+contactStatus.innerText = "Error: " + (error.text || JSON.stringify(error));
+console.log("EmailJS Error:", error);
 });
 });
 
 function addRow(d){
-let r = table.insertRow();
+let r = document.getElementById("table").insertRow();
 r.insertCell(0).innerText = d.name;
 r.insertCell(1).innerText = "$" + d.money;
 }
@@ -304,11 +340,11 @@ r.insertCell(1).innerText = "$" + d.money;
 function update(){
 let total = data.reduce((a,b) => a + b.money, 0);
 if(total > goal) total = goal;
-amount.innerText = "$" + total + " / $1040";
+document.getElementById("amount").innerText = "$" + total + " / $1040";
 }
 
 function scrollToForm(){
-formBox.scrollIntoView({behavior:"smooth"});
+document.getElementById("formBox").scrollIntoView({behavior:"smooth"});
 }
 
 function openGFM(){
@@ -320,23 +356,25 @@ let lang = "en";
 function toggleLang(){
 
 if(lang === "en"){
-title.innerText = "Proyecto Pool Lotería Florida";
-team.innerText = "Trabajar en equipo es mejor que trabajar solo";
+document.getElementById("title").innerText = "Proyecto Pool Lotería Florida";
+document.getElementById("team").innerText = "Trabajar en equipo es mejor que trabajar solo";
 
-whatTitle.innerText = "¿Qué es una pool de lotería?";
-whatText.innerText = "Un sistema donde varias personas participan juntas en la lotería.";
+document.getElementById("whatTitle").innerText = "¿Qué es una pool de lotería?";
+document.getElementById("whatText").innerText = "Un sistema donde varias personas participan juntas en la lotería.";
 
-structureTitle.innerText = "Estructura del Proyecto";
-structureText.innerHTML = `
+document.getElementById("structureTitle").innerText = "Estructura del Proyecto";
+document.getElementById("structureText").innerHTML = `
 ✔ 52 sorteos<br>
 ✔ 10 números fijos<br>
 ✔ $2 por número<br><br>
 💰 Total: $1,040
 `;
 
-noteTitle.innerText = "Transparencia e Información";
-noteText.innerHTML = `
+document.getElementById("noteTitle").innerText = "Transparencia e Información";
+document.getElementById("noteText").innerHTML = `
 Esto no es venta de tickets ni inversión.<br><br>
+
+Es una participación colaborativa donde las personas aportan voluntariamente.<br><br>
 
 ✔ Compra solo cuando se completa $1,040<br>
 ✔ 52 sorteos aproximadamente 17 a 18 semanas<br>
@@ -346,17 +384,17 @@ Esto no es venta de tickets ni inversión.<br><br>
 ⚠️ Sin garantía de ganancias
 `;
 
-durationTitle.innerText = "Duración";
-durationText.innerText = "52 sorteos aproximadamente 17 a 18 semanas después de la compra";
+document.getElementById("durationTitle").innerText = "Duración";
+document.getElementById("durationText").innerText = "52 sorteos aproximadamente 17 a 18 semanas después de la compra.";
 
-joinTitle.innerText = "Participar / Formulario de Contacto";
+document.getElementById("joinTitle").innerText = "Participar / Formulario de Contacto";
 
-document.getElementById("contact_name").placeholder = "Nombre completo";
-document.getElementById("contact_email").placeholder = "Correo electrónico";
-document.getElementById("contact_phone").placeholder = "Número de teléfono";
-document.getElementById("contact_amount").placeholder = "Mínimo $10";
-document.getElementById("contact_ref").placeholder = "Referencia de Zelle";
-document.getElementById("contact_message").placeholder = "Escribe tu mensaje aquí...";
+document.getElementById("name").placeholder = "Nombre completo";
+document.getElementById("email").placeholder = "Correo electrónico";
+document.getElementById("phone").placeholder = "Número de teléfono";
+document.getElementById("money").placeholder = "Mínimo $10";
+document.getElementById("ref").placeholder = "Referencia de Zelle";
+document.getElementById("message").placeholder = "Escribe tu mensaje aquí...";
 
 lang = "es";
 }
